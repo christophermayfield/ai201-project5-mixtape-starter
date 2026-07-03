@@ -144,3 +144,22 @@ if song.shared_by != user_id:
 ```
 
 **Verification:** `POST /songs/<song_id>/rate` with a different user's ID, then `GET /users/<sharer_id>/notifications` — a `song_rated` notification appears.
+
+---
+
+## Git Commit History
+
+`git log --oneline` on branch `bugfix/mixtape`:
+
+```
+109c987 update submission.md
+236e5fd fix: deduplicate song search results for multi-tag songs
+6aed2a4 update submission.md
+fb6df09 fix bug in feed_service
+f62f35b fix bug fix on line 73
+607a4bd fix bug fix on line 73
+35e3387 update submission.md
+c2af295 add submission.md
+2dfdeaa Add .gitignore file and update README with setup instructions
+7b64551 initial commit
+```
