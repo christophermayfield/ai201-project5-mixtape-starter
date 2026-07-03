@@ -152,6 +152,7 @@ if song.shared_by != user_id:
 `git log --oneline` on branch `bugfix/mixtape`:
 
 ```
+27bfb3e docs: add git commit history to submission.md
 109c987 update submission.md
 236e5fd fix: deduplicate song search results for multi-tag songs
 6aed2a4 update submission.md
