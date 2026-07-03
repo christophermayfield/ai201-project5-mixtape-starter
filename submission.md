@@ -44,3 +44,19 @@ RECENT_THRESHOLD = timedelta(minutes=30)
 ```
 
 **Verification:** `GET /feed/<user_id>/listening-now` after running `python seed_data.py` — only friends who listened in the last ~30 minutes should appear.
+
+### Issue 3: The same song keeps showing up twice in search
+
+**File:** `services/search_service.py` — `search_songs()`
+
+**Problem:** The query joins `song_tags` to include tag data, but a song with multiple tags produces one row per tag. Songs with 3 tags appeared 3 times in search results instead of once.
+
+**Fix:** Added `.distinct()` to the query so each song is returned only once:
+
+```python
+.filter(...)
+.distinct()
+.all()
+```
+
+**Verification:** `pytest tests/test_search.py`
