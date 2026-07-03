@@ -30,3 +30,17 @@ elif days_since_last == 1:
 ```
 
 **Verification:** `pytest tests/test_streaks.py::test_streak_increments_on_sunday`
+
+### Issue 2: Friends Listening Now shows people from yesterday
+
+**File:** `services/feed_service.py` — `get_friends_listening_now()`
+
+**Problem:** `RECENT_THRESHOLD` was set to `timedelta(hours=24)`, so the "listening now" feed included any friend who listened in the past 24 hours — including activity from hours ago or late yesterday. Stale listeners appeared alongside truly recent ones.
+
+**Fix:** Changed the threshold to `timedelta(minutes=30)` so only very recent listening events are included:
+
+```python
+RECENT_THRESHOLD = timedelta(minutes=30)
+```
+
+**Verification:** `GET /feed/<user_id>/listening-now` after running `python seed_data.py` — only friends who listened in the last ~30 minutes should appear.
