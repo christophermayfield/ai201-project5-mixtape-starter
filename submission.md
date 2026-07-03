@@ -13,3 +13,20 @@ playlist
 -in users.py, it gets the user by id, 
     - the streak returns the streak
     - the nofications returns the notifications and marks them as read
+
+## Bug Fixes
+
+### Issue 1: My listening streak keeps resetting
+
+**File:** `services/streak_service.py` — `update_listening_streak()`
+
+**Problem:** The streak only incremented on consecutive days when today was not Sunday. The condition `days_since_last == 1 and today.weekday() != 6` caused listening on Saturday and then Sunday to reset the streak to 1 instead of incrementing it to 2.
+
+**Fix:** Removed the `today.weekday() != 6` check so any consecutive calendar day increments the streak:
+
+```python
+elif days_since_last == 1:
+    user.listening_streak += 1
+```
+
+**Verification:** `pytest tests/test_streaks.py::test_streak_increments_on_sunday`
