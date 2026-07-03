@@ -175,3 +175,6 @@ class Notification(db.Model):
             "created_at": self.created_at.isoformat(),
             "read": self.read,
         }
+
+
+
